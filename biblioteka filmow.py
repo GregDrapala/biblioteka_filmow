@@ -8,12 +8,13 @@ class Movie:
         self.title = title
         self.year = year
         self.genre = genre
-        self.views = views
+        self.views = 0
 
     @property
     def play(self):  
         self.views += 1
         print('{} ({})'.format(self.title, self.year))
+        
 
 
 class Series(Movie):
@@ -23,14 +24,14 @@ class Series(Movie):
         self.season = season
 
     def number_of_episodes(self):
-        print('{} has {} episodes'.format(self.title, self.episode))
+        return '{} has {} episodes'.format(self.title, self.episode)
 
     @property
     def play(self):  
         self.views += 1
         self.episode += 1
-        print('{} S{:02d}E{:02d}'.format(self.title, self.season, self.episode))
-
+        print( '{} S{:02d}E{:02d}'.format(self.title, self.season, self.episode))
+    
 
 
 
@@ -39,7 +40,7 @@ def get_movies():
     by_name = sorted(movies, key=lambda m: m.title)  
     print('Movies:')
     for name in by_name:
-        print('- {}'.format(name.title))
+        return '- {}'.format(name.title)
 
 
 def get_series(): 
@@ -47,7 +48,7 @@ def get_series():
     by_name = sorted(series, key=lambda m: m.title)  
     print('Series:')
     for name in by_name:
-        print('- {}'.format(name.title))
+        return '- {}'.format(name.title)
 
 
 def search():  
@@ -55,10 +56,10 @@ def search():
     for movie in library:
         if movie.title == name:
             movie.play
-            return
+            return '- {}'.format(name.title)
     else:
         print('Sorry, title not found.')
-
+        
 
 def generate_views():  
     rand_movie = random.choice(library)
@@ -77,13 +78,13 @@ def top_titles(content_type):
         print("Top 3 Movies:")
         for name in by_views:
             print('- {} - {} views.'.format(name.title, name.views))
+    
     elif content_type == 'series':
         movies = filter(lambda s: isinstance(s, Series), library)
         by_views = sorted(movies, reverse=True, key=lambda m: m.views)[:3]
         print('Top 3 Series:')
         for name in by_views:
             print('- {} - {} views.'.format(name.title, name.views))
-
 
 movie1 = Movie('Pulp Fiction', '1994', 'Crime, Drama', 0)
 movie2 = Movie('The Shawshank Redemption', '1994', 'Drama', 0)
